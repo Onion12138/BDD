@@ -1,0 +1,17 @@
+AND=1
+OR=2
+NOT=3
+XOR=4
+IMPLY=5
+TRUE=6
+FALSE=7
+LPAREN=8
+RPAREN=9
+IDENTIFIER=10
+WS=11
+'^'=4
+'->'=5
+'true'=6
+'false'=7
+'('=8
+')'=9
