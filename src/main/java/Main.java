@@ -1,9 +1,10 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         List<String> tokens = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         String input;
@@ -17,10 +18,13 @@ public class Main {
         List<String> parsedTokens = parser.parse(input);
         Algorithm.calculateMaxIndex(parsedTokens);
         Vertex vertex = Algorithm.generateGraph(parsedTokens);
+        System.out.println(vertex);
         Traverse traverse = new Traverse();
         traverse.dfs(vertex);
         List<Vertex> traverseList = traverse.getTraverse();
+        System.out.println(traverseList);
         // todo draw the graph
-
+        Drawer drawer = new Drawer();
+        drawer.draw(traverseList);
     }
 }

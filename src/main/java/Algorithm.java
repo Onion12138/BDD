@@ -26,7 +26,8 @@ public class Algorithm {
                     stack.push(apply(a, b, token));
                 }
             } else {
-                stack.push(new Vertex(token2id.get(token), maxIndex));
+//                stack.push(new Vertex(token2id.get(token), maxIndex));
+                stack.push(new Vertex(token.charAt(0) - 'A' + 1, maxIndex));
             }
         }
         return stack.pop();
