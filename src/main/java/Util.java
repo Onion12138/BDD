@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Util {
     public static boolean isOperator(String token) {
-        List<String> operatorList = Arrays.asList("+", "*", "!");
+        List<String> operatorList = Arrays.asList("+", "*", "!", "(", ")");
         return operatorList.contains(token);
     }
     public static int calculate(int v1, int v2, String operator) {

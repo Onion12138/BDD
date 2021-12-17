@@ -28,25 +28,13 @@ public class BoolParserBaseListener implements BoolParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBinaryExpression(BoolParser.BinaryExpressionContext ctx) { }
+	@Override public void enterOp1Expression(BoolParser.Op1ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBinaryExpression(BoolParser.BinaryExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBoolExpression(BoolParser.BoolExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBoolExpression(BoolParser.BoolExpressionContext ctx) { }
+	@Override public void exitOp1Expression(BoolParser.Op1ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -59,6 +47,18 @@ public class BoolParserBaseListener implements BoolParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIdentifierExpression(BoolParser.IdentifierExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOp2Expression(BoolParser.Op2ExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOp2Expression(BoolParser.Op2ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -88,13 +88,25 @@ public class BoolParserBaseListener implements BoolParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBinary(BoolParser.BinaryContext ctx) { }
+	@Override public void enterOp1(BoolParser.Op1Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBinary(BoolParser.BinaryContext ctx) { }
+	@Override public void exitOp1(BoolParser.Op1Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOp2(BoolParser.Op2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOp2(BoolParser.Op2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

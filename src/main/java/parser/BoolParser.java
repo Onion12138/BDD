@@ -20,10 +20,10 @@ public class BoolParser extends Parser {
 		AND=1, OR=2, NOT=3, XOR=4, IMPLY=5, TRUE=6, FALSE=7, LPAREN=8, RPAREN=9, 
 		IDENTIFIER=10, WS=11;
 	public static final int
-		RULE_parse = 0, RULE_expression = 1, RULE_binary = 2, RULE_bool = 3;
+		RULE_parse = 0, RULE_expression = 1, RULE_op1 = 2, RULE_op2 = 3, RULE_bool = 4;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"parse", "expression", "binary", "bool"
+			"parse", "expression", "op1", "op2", "bool"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -121,9 +121,9 @@ public class BoolParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(8);
+			setState(10);
 			expression(0);
-			setState(9);
+			setState(11);
 			match(EOF);
 			}
 		}
@@ -149,9 +149,9 @@ public class BoolParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class BinaryExpressionContext extends ExpressionContext {
+	public static class Op1ExpressionContext extends ExpressionContext {
 		public ExpressionContext left;
-		public BinaryContext op;
+		public Op1Context firstOp;
 		public ExpressionContext right;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
@@ -159,45 +159,26 @@ public class BoolParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public BinaryContext binary() {
-			return getRuleContext(BinaryContext.class,0);
+		public Op1Context op1() {
+			return getRuleContext(Op1Context.class,0);
 		}
-		public BinaryExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
+		public Op1ExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof BoolParserListener ) ((BoolParserListener)listener).enterBinaryExpression(this);
+			if ( listener instanceof BoolParserListener ) ((BoolParserListener)listener).enterOp1Expression(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof BoolParserListener ) ((BoolParserListener)listener).exitBinaryExpression(this);
+			if ( listener instanceof BoolParserListener ) ((BoolParserListener)listener).exitOp1Expression(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof BoolParserVisitor ) return ((BoolParserVisitor<? extends T>)visitor).visitBinaryExpression(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class BoolExpressionContext extends ExpressionContext {
-		public TerminalNode IDENTIFIER() { return getToken(BoolParser.IDENTIFIER, 0); }
-		public BoolExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof BoolParserListener ) ((BoolParserListener)listener).enterBoolExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof BoolParserListener ) ((BoolParserListener)listener).exitBoolExpression(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof BoolParserVisitor ) return ((BoolParserVisitor<? extends T>)visitor).visitBoolExpression(this);
+			if ( visitor instanceof BoolParserVisitor ) return ((BoolParserVisitor<? extends T>)visitor).visitOp1Expression(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class IdentifierExpressionContext extends ExpressionContext {
-		public BoolContext bool() {
-			return getRuleContext(BoolContext.class,0);
-		}
+		public TerminalNode IDENTIFIER() { return getToken(BoolParser.IDENTIFIER, 0); }
 		public IdentifierExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -210,6 +191,34 @@ public class BoolParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof BoolParserVisitor ) return ((BoolParserVisitor<? extends T>)visitor).visitIdentifierExpression(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class Op2ExpressionContext extends ExpressionContext {
+		public ExpressionContext left;
+		public Op2Context secondOp;
+		public ExpressionContext right;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public Op2Context op2() {
+			return getRuleContext(Op2Context.class,0);
+		}
+		public Op2ExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BoolParserListener ) ((BoolParserListener)listener).enterOp2Expression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BoolParserListener ) ((BoolParserListener)listener).exitOp2Expression(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BoolParserVisitor ) return ((BoolParserVisitor<? extends T>)visitor).visitOp2Expression(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -270,7 +279,7 @@ public class BoolParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(20);
+			setState(21);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case LPAREN:
@@ -279,11 +288,11 @@ public class BoolParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(12);
-				match(LPAREN);
-				setState(13);
-				expression(0);
 				setState(14);
+				match(LPAREN);
+				setState(15);
+				expression(0);
+				setState(16);
 				match(RPAREN);
 				}
 				break;
@@ -292,59 +301,68 @@ public class BoolParser extends Parser {
 				_localctx = new NotExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(16);
+				setState(18);
 				match(NOT);
-				setState(17);
+				setState(19);
 				expression(4);
 				}
 				break;
 			case IDENTIFIER:
 				{
-				_localctx = new BoolExpressionContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(18);
-				match(IDENTIFIER);
-				}
-				break;
-			case TRUE:
-			case FALSE:
-				{
 				_localctx = new IdentifierExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(19);
-				bool();
+				setState(20);
+				match(IDENTIFIER);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(28);
+			setState(33);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					{
-					_localctx = new BinaryExpressionContext(new ExpressionContext(_parentctx, _parentState));
-					((BinaryExpressionContext)_localctx).left = _prevctx;
-					pushNewRecursionContext(_localctx, _startState, RULE_expression);
-					setState(22);
-					if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-					setState(23);
-					((BinaryExpressionContext)_localctx).op = binary();
-					setState(24);
-					((BinaryExpressionContext)_localctx).right = expression(4);
+					setState(31);
+					_errHandler.sync(this);
+					switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
+					case 1:
+						{
+						_localctx = new Op1ExpressionContext(new ExpressionContext(_parentctx, _parentState));
+						((Op1ExpressionContext)_localctx).left = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
+						setState(23);
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+						setState(24);
+						((Op1ExpressionContext)_localctx).firstOp = op1();
+						setState(25);
+						((Op1ExpressionContext)_localctx).right = expression(4);
+						}
+						break;
+					case 2:
+						{
+						_localctx = new Op2ExpressionContext(new ExpressionContext(_parentctx, _parentState));
+						((Op2ExpressionContext)_localctx).left = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
+						setState(27);
+						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
+						setState(28);
+						((Op2ExpressionContext)_localctx).secondOp = op2();
+						setState(29);
+						((Op2ExpressionContext)_localctx).right = expression(3);
+						}
+						break;
 					}
 					} 
 				}
-				setState(30);
+				setState(35);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
 			}
 			}
 		}
@@ -359,40 +377,81 @@ public class BoolParser extends Parser {
 		return _localctx;
 	}
 
-	public static class BinaryContext extends ParserRuleContext {
+	public static class Op1Context extends ParserRuleContext {
 		public TerminalNode AND() { return getToken(BoolParser.AND, 0); }
-		public TerminalNode OR() { return getToken(BoolParser.OR, 0); }
-		public TerminalNode XOR() { return getToken(BoolParser.XOR, 0); }
-		public TerminalNode IMPLY() { return getToken(BoolParser.IMPLY, 0); }
-		public BinaryContext(ParserRuleContext parent, int invokingState) {
+		public Op1Context(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_binary; }
+		@Override public int getRuleIndex() { return RULE_op1; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof BoolParserListener ) ((BoolParserListener)listener).enterBinary(this);
+			if ( listener instanceof BoolParserListener ) ((BoolParserListener)listener).enterOp1(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof BoolParserListener ) ((BoolParserListener)listener).exitBinary(this);
+			if ( listener instanceof BoolParserListener ) ((BoolParserListener)listener).exitOp1(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof BoolParserVisitor ) return ((BoolParserVisitor<? extends T>)visitor).visitBinary(this);
+			if ( visitor instanceof BoolParserVisitor ) return ((BoolParserVisitor<? extends T>)visitor).visitOp1(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final BinaryContext binary() throws RecognitionException {
-		BinaryContext _localctx = new BinaryContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_binary);
+	public final Op1Context op1() throws RecognitionException {
+		Op1Context _localctx = new Op1Context(_ctx, getState());
+		enterRule(_localctx, 4, RULE_op1);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(36);
+			match(AND);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Op2Context extends ParserRuleContext {
+		public TerminalNode OR() { return getToken(BoolParser.OR, 0); }
+		public TerminalNode XOR() { return getToken(BoolParser.XOR, 0); }
+		public TerminalNode IMPLY() { return getToken(BoolParser.IMPLY, 0); }
+		public Op2Context(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_op2; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BoolParserListener ) ((BoolParserListener)listener).enterOp2(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BoolParserListener ) ((BoolParserListener)listener).exitOp2(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BoolParserVisitor ) return ((BoolParserVisitor<? extends T>)visitor).visitOp2(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Op2Context op2() throws RecognitionException {
+		Op2Context _localctx = new Op2Context(_ctx, getState());
+		enterRule(_localctx, 6, RULE_op2);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(31);
+			setState(38);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << AND) | (1L << OR) | (1L << XOR) | (1L << IMPLY))) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << OR) | (1L << XOR) | (1L << IMPLY))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -437,12 +496,12 @@ public class BoolParser extends Parser {
 
 	public final BoolContext bool() throws RecognitionException {
 		BoolContext _localctx = new BoolContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_bool);
+		enterRule(_localctx, 8, RULE_bool);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(33);
+			setState(40);
 			_la = _input.LA(1);
 			if ( !(_la==TRUE || _la==FALSE) ) {
 			_errHandler.recoverInline(this);
@@ -476,22 +535,25 @@ public class BoolParser extends Parser {
 		switch (predIndex) {
 		case 0:
 			return precpred(_ctx, 3);
+		case 1:
+			return precpred(_ctx, 2);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\r&\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3"+
-		"\27\n\3\3\3\3\3\3\3\3\3\7\3\35\n\3\f\3\16\3 \13\3\3\4\3\4\3\5\3\5\3\5"+
-		"\2\3\4\6\2\4\6\b\2\4\4\2\3\4\6\7\3\2\b\t\2%\2\n\3\2\2\2\4\26\3\2\2\2\6"+
-		"!\3\2\2\2\b#\3\2\2\2\n\13\5\4\3\2\13\f\7\2\2\3\f\3\3\2\2\2\r\16\b\3\1"+
-		"\2\16\17\7\n\2\2\17\20\5\4\3\2\20\21\7\13\2\2\21\27\3\2\2\2\22\23\7\5"+
-		"\2\2\23\27\5\4\3\6\24\27\7\f\2\2\25\27\5\b\5\2\26\r\3\2\2\2\26\22\3\2"+
-		"\2\2\26\24\3\2\2\2\26\25\3\2\2\2\27\36\3\2\2\2\30\31\f\5\2\2\31\32\5\6"+
-		"\4\2\32\33\5\4\3\6\33\35\3\2\2\2\34\30\3\2\2\2\35 \3\2\2\2\36\34\3\2\2"+
-		"\2\36\37\3\2\2\2\37\5\3\2\2\2 \36\3\2\2\2!\"\t\2\2\2\"\7\3\2\2\2#$\t\3"+
-		"\2\2$\t\3\2\2\2\4\26\36";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\r-\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
+		"\5\3\30\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3\"\n\3\f\3\16\3%\13\3\3"+
+		"\4\3\4\3\5\3\5\3\6\3\6\3\6\2\3\4\7\2\4\6\b\n\2\4\4\2\4\4\6\7\3\2\b\t\2"+
+		"+\2\f\3\2\2\2\4\27\3\2\2\2\6&\3\2\2\2\b(\3\2\2\2\n*\3\2\2\2\f\r\5\4\3"+
+		"\2\r\16\7\2\2\3\16\3\3\2\2\2\17\20\b\3\1\2\20\21\7\n\2\2\21\22\5\4\3\2"+
+		"\22\23\7\13\2\2\23\30\3\2\2\2\24\25\7\5\2\2\25\30\5\4\3\6\26\30\7\f\2"+
+		"\2\27\17\3\2\2\2\27\24\3\2\2\2\27\26\3\2\2\2\30#\3\2\2\2\31\32\f\5\2\2"+
+		"\32\33\5\6\4\2\33\34\5\4\3\6\34\"\3\2\2\2\35\36\f\4\2\2\36\37\5\b\5\2"+
+		"\37 \5\4\3\5 \"\3\2\2\2!\31\3\2\2\2!\35\3\2\2\2\"%\3\2\2\2#!\3\2\2\2#"+
+		"$\3\2\2\2$\5\3\2\2\2%#\3\2\2\2&\'\7\3\2\2\'\7\3\2\2\2()\t\2\2\2)\t\3\2"+
+		"\2\2*+\t\3\2\2+\13\3\2\2\2\5\27!#";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

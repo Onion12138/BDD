@@ -12,13 +12,17 @@ parse
 expression
  : LPAREN expression RPAREN                       #parenExpression
  | NOT expression                                 #notExpression
- | left=expression op=binary right=expression     #binaryExpression
- | IDENTIFIER                                           #boolExpression
- | bool                                     #identifierExpression
+ | left=expression firstOp=op1 right=expression     #op1Expression
+ | left=expression secondOp=op2 right=expression     #op2Expression
+ | IDENTIFIER                                       #identifierExpression
  ;
 
-binary
- : AND | OR | XOR | IMPLY
+op1
+ : AND
+ ;
+
+op2
+ : OR | XOR | IMPLY
  ;
 
 bool

@@ -18,29 +18,17 @@ public interface BoolParserListener extends ParseTreeListener {
 	 */
 	void exitParse(BoolParser.ParseContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code binaryExpression}
+	 * Enter a parse tree produced by the {@code op1Expression}
 	 * labeled alternative in {@link BoolParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterBinaryExpression(BoolParser.BinaryExpressionContext ctx);
+	void enterOp1Expression(BoolParser.Op1ExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code binaryExpression}
+	 * Exit a parse tree produced by the {@code op1Expression}
 	 * labeled alternative in {@link BoolParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitBinaryExpression(BoolParser.BinaryExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code boolExpression}
-	 * labeled alternative in {@link BoolParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterBoolExpression(BoolParser.BoolExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code boolExpression}
-	 * labeled alternative in {@link BoolParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitBoolExpression(BoolParser.BoolExpressionContext ctx);
+	void exitOp1Expression(BoolParser.Op1ExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code identifierExpression}
 	 * labeled alternative in {@link BoolParser#expression}.
@@ -53,6 +41,18 @@ public interface BoolParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIdentifierExpression(BoolParser.IdentifierExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code op2Expression}
+	 * labeled alternative in {@link BoolParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterOp2Expression(BoolParser.Op2ExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code op2Expression}
+	 * labeled alternative in {@link BoolParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitOp2Expression(BoolParser.Op2ExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code notExpression}
 	 * labeled alternative in {@link BoolParser#expression}.
@@ -78,15 +78,25 @@ public interface BoolParserListener extends ParseTreeListener {
 	 */
 	void exitParenExpression(BoolParser.ParenExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BoolParser#binary}.
+	 * Enter a parse tree produced by {@link BoolParser#op1}.
 	 * @param ctx the parse tree
 	 */
-	void enterBinary(BoolParser.BinaryContext ctx);
+	void enterOp1(BoolParser.Op1Context ctx);
 	/**
-	 * Exit a parse tree produced by {@link BoolParser#binary}.
+	 * Exit a parse tree produced by {@link BoolParser#op1}.
 	 * @param ctx the parse tree
 	 */
-	void exitBinary(BoolParser.BinaryContext ctx);
+	void exitOp1(BoolParser.Op1Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link BoolParser#op2}.
+	 * @param ctx the parse tree
+	 */
+	void enterOp2(BoolParser.Op2Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link BoolParser#op2}.
+	 * @param ctx the parse tree
+	 */
+	void exitOp2(BoolParser.Op2Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link BoolParser#bool}.
 	 * @param ctx the parse tree

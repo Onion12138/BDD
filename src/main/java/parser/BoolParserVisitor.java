@@ -17,19 +17,12 @@ public interface BoolParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParse(BoolParser.ParseContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code binaryExpression}
+	 * Visit a parse tree produced by the {@code op1Expression}
 	 * labeled alternative in {@link BoolParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBinaryExpression(BoolParser.BinaryExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code boolExpression}
-	 * labeled alternative in {@link BoolParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBoolExpression(BoolParser.BoolExpressionContext ctx);
+	T visitOp1Expression(BoolParser.Op1ExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code identifierExpression}
 	 * labeled alternative in {@link BoolParser#expression}.
@@ -37,6 +30,13 @@ public interface BoolParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIdentifierExpression(BoolParser.IdentifierExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code op2Expression}
+	 * labeled alternative in {@link BoolParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOp2Expression(BoolParser.Op2ExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code notExpression}
 	 * labeled alternative in {@link BoolParser#expression}.
@@ -52,11 +52,17 @@ public interface BoolParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParenExpression(BoolParser.ParenExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link BoolParser#binary}.
+	 * Visit a parse tree produced by {@link BoolParser#op1}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBinary(BoolParser.BinaryContext ctx);
+	T visitOp1(BoolParser.Op1Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link BoolParser#op2}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOp2(BoolParser.Op2Context ctx);
 	/**
 	 * Visit a parse tree produced by {@link BoolParser#bool}.
 	 * @param ctx the parse tree
