@@ -24,6 +24,12 @@ public class Algorithm {
                     Vertex b = stack.pop();
                     Vertex a = stack.pop();
                     stack.push(apply(a, b, token));
+                } else {
+                    Vertex a = stack.pop();
+                    Vertex low = a.getLow();
+                    a.setLow(a.getHigh());
+                    a.setHigh(low);
+                    stack.push(a);
                 }
             } else {
                 stack.push(new Vertex(token2id.get(token), maxIndex));

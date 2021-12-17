@@ -18,6 +18,11 @@ import static guru.nidi.graphviz.model.Factory.mutNode;
 import static guru.nidi.graphviz.model.Link.to;
 
 public class Drawer {
+
+    public static boolean getBool(Vertex vertex) {
+        return vertex.getVal() == 1;
+    }
+
     public void draw(List<Vertex> traverse) throws IOException {
         MutableGraph g = mutGraph("graph").setDirected(true).use((gr, ctx) -> {
             Color color = Color.rgb(168, 214, 255);
@@ -28,14 +33,14 @@ public class Drawer {
                         MutableNode endNode = mutNode(String.valueOf(vertex.getLow().getId())).add(Label.of(vertex.getLow().getIndex() + ""));
                         startNode.addLink(to((endNode)).add(color).add(Label.of("0")));
                     } else {
-                        MutableNode endNode = mutNode("False");
+                        MutableNode endNode = mutNode(getBool(vertex.getLow()) ? "true" : "false");
                         startNode.addLink(to((endNode)).add(color).add(Label.of("0")));
                     }
                     if (isNondeterminal(vertex.getHigh())) {
                         MutableNode endNode = mutNode(String.valueOf(vertex.getHigh().getId())).add(Label.of(vertex.getHigh().getIndex() + ""));
                         startNode.addLink(to((endNode)).add(color).add(Label.of("1")));
                     } else {
-                        MutableNode endNode = mutNode("True");
+                        MutableNode endNode = mutNode(getBool(vertex.getHigh()) ? "true" : "false");
                         startNode.addLink(to((endNode)).add(color).add(Label.of("1")));
                     }
                 }
