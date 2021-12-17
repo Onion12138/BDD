@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class SimpleParser implements Parser{
+public class SimpleParser implements ParserProtocol{
     @Override
     public List<String> parse(List<String> tokens) {
         Stack<String> s1 = new Stack<>();

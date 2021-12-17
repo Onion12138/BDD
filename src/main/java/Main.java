@@ -10,7 +10,7 @@ public class Main {
         while (!(s = scanner.next()).equals("#")) {
             tokens.add(s);
         }
-        Parser parser = new SimpleParser();
+        ParserProtocol parser = new SimpleParser();
         List<String> parsedTokens = parser.parse(tokens);
         Algorithm.calculateMaxIndex(parsedTokens);
         Vertex vertex = Algorithm.generateGraph(parsedTokens);

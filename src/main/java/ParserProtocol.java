@@ -1,5 +1,5 @@
 import java.util.List;
 
-public interface Parser {
+public interface ParserProtocol {
     List<String> parse(List<String> tokens);
 }
