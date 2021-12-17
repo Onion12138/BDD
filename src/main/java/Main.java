@@ -1,9 +1,10 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         List<String> tokens = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         String s;
@@ -17,7 +18,9 @@ public class Main {
         Traverse traverse = new Traverse();
         traverse.dfs(vertex);
         List<Vertex> traverseList = traverse.getTraverse();
+        System.out.println(traverseList);
         // todo draw the graph
-
+        Drawer drawer = new Drawer();
+        drawer.draw(traverseList);
     }
 }
