@@ -25,5 +25,10 @@
             <version>1.18.18</version>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>4.9.2</version>
+        </dependency>
     </dependencies>
 </project>

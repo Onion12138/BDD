@@ -1,5 +1,8 @@
-import java.util.List;
+import java.util.*;
 
-public interface Parser {
-    List<String> parse(List<String> tokens);
+public class Parser {
+
+    public List<String> parse(String input) {
+        return null;
+    }
 }
