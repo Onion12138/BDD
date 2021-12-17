@@ -15,6 +15,7 @@ public class Main {
         List<String> parsedTokens = parser.parse(tokens);
         Algorithm.calculateMaxIndex(parsedTokens);
         Vertex vertex = Algorithm.generateGraph(parsedTokens);
+        System.out.println(vertex);
         Traverse traverse = new Traverse();
         traverse.dfs(vertex);
         List<Vertex> traverseList = traverse.getTraverse();

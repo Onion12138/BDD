@@ -23,20 +23,20 @@ public class Drawer {
             Color color = Color.rgb(168, 214, 255);
             for (Vertex vertex : traverse) {
                 if (isNondeterminal(vertex)) {
-                    MutableNode startNode = mutNode(String.valueOf(vertex.getIndex()));
+                    MutableNode startNode = mutNode(String.valueOf(vertex.getId())).add(Label.of(vertex.getIndex() + ""));
                     if (isNondeterminal(vertex.getLow())) {
-                        MutableNode endNode = mutNode(String.valueOf(vertex.getLow().getIndex()));
-                        startNode.addLink(to((endNode)).add(color));
+                        MutableNode endNode = mutNode(String.valueOf(vertex.getLow().getId())).add(Label.of(vertex.getLow().getIndex() + ""));
+                        startNode.addLink(to((endNode)).add(color).add(Label.of("0")));
                     } else {
                         MutableNode endNode = mutNode("False");
-                        startNode.addLink(to((endNode)).add(color));
+                        startNode.addLink(to((endNode)).add(color).add(Label.of("0")));
                     }
                     if (isNondeterminal(vertex.getHigh())) {
-                        MutableNode endNode = mutNode(String.valueOf(vertex.getHigh().getIndex()));
-                        startNode.addLink(to((endNode)).add(color));
+                        MutableNode endNode = mutNode(String.valueOf(vertex.getHigh().getId())).add(Label.of(vertex.getHigh().getIndex() + ""));
+                        startNode.addLink(to((endNode)).add(color).add(Label.of("1")));
                     } else {
                         MutableNode endNode = mutNode("True");
-                        startNode.addLink(to((endNode)).add(color));
+                        startNode.addLink(to((endNode)).add(color).add(Label.of("1")));
                     }
                 }
             }
