@@ -17,7 +17,7 @@ public class BoolLexer extends Lexer {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		AND=1, OR=2, NOT=3, XOR=4, IMPLY=5, TRUE=6, FALSE=7, LPAREN=8, RPAREN=9,
+		AND=1, OR=2, NOT=3, XOR=4, IMPLY=5, TRUE=6, FALSE=7, LPAREN=8, RPAREN=9, 
 		IDENTIFIER=10, WS=11;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
@@ -29,7 +29,7 @@ public class BoolLexer extends Lexer {
 
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"AND", "OR", "NOT", "XOR", "IMPLY", "TRUE", "FALSE", "LPAREN", "RPAREN",
+			"AND", "OR", "NOT", "XOR", "IMPLY", "TRUE", "FALSE", "LPAREN", "RPAREN", 
 			"IDENTIFIER", "WS"
 		};
 	}
@@ -43,7 +43,7 @@ public class BoolLexer extends Lexer {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "AND", "OR", "NOT", "XOR", "IMPLY", "TRUE", "FALSE", "LPAREN",
+			null, "AND", "OR", "NOT", "XOR", "IMPLY", "TRUE", "FALSE", "LPAREN", 
 			"RPAREN", "IDENTIFIER", "WS"
 		};
 	}

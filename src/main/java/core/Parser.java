@@ -19,7 +19,14 @@ public class Parser {
             } else { // expr op expr
                 visit((BoolParser.ExpressionContext) ctx.getChild(0));
                 visit((BoolParser.ExpressionContext) ctx.getChild(2));
-                stringTree.add(ctx.getChild(1).getText());
+                String op = ctx.getChild(1).getText();
+                if (op.equals("&")) {
+                    stringTree.add("*");
+                } else if (op.equals("|")) {
+                    stringTree.add("+");
+                } else {
+                    stringTree.add(ctx.getChild(1).getText());
+                }
             }
         } else if (ctx.getChildCount() == 2) { // not expr
             visit((BoolParser.ExpressionContext) ctx.getChild(1));
@@ -29,22 +36,19 @@ public class Parser {
         }
     }
 
-    public List<String> parse(String input) {
-        CodePointCharStream stream = CharStreams.fromString(input);
-        BoolLexer lexer = new BoolLexer(stream);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        BoolParser parser = new BoolParser(tokens);
-        BoolParser.ParseContext ctx = parser.parse();
-        BoolParser.ExpressionContext exp = ctx.expression();
-        stringTree = new ArrayList<>();
-        visit(exp);
+    public List<String> parse(String input) throws Exception {
+        try {
+            CodePointCharStream stream = CharStreams.fromString(input);
+            BoolLexer lexer = new BoolLexer(stream);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            BoolParser parser = new BoolParser(tokens);
+            BoolParser.ParseContext ctx = parser.parse();
+            BoolParser.ExpressionContext exp = ctx.expression();
+            stringTree = new ArrayList<>();
+            visit(exp);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return stringTree;
     }
-
-//    public static void main(String[] args) {
-//
-//        core.Parser parser = new core.Parser();
-//        List<String> parse = parser.parse("(a + b)*c");
-//        System.out.println(111);
-//    }
 }
