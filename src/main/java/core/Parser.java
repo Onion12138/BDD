@@ -16,7 +16,7 @@ public class Parser {
         if (ctx.getChildCount() == 3) {
             if (ctx.getChild(0).getText().equals("(")) { // (expr)
                 visit((BoolParser.ExpressionContext) ctx.getChild(1));
-            } else { // expr op expr
+            } else if (!ctx.getChild(1).getText().equals("->") && !ctx.getChild(1).getText().equals("^")) { // expr op expr and op is not -> and op is not ^
                 visit((BoolParser.ExpressionContext) ctx.getChild(0));
                 visit((BoolParser.ExpressionContext) ctx.getChild(2));
                 String op = ctx.getChild(1).getText();
@@ -26,6 +26,23 @@ public class Parser {
                     stringTree.add("+");
                 } else {
                     stringTree.add(ctx.getChild(1).getText());
+                }
+            } else { // expr -> expr or expr ^ expr
+                if (ctx.getChild(1).getText().equals("->")) { // expr -> expr
+                    visit((BoolParser.ExpressionContext) ctx.getChild(0));
+                    stringTree.add("!");
+                    visit((BoolParser.ExpressionContext) ctx.getChild(2));
+                    stringTree.add("+");
+                } else { // ^
+                    visit((BoolParser.ExpressionContext) ctx.getChild(0));
+                    stringTree.add("!");
+                    visit((BoolParser.ExpressionContext) ctx.getChild(2));
+                    stringTree.add("*");
+                    visit((BoolParser.ExpressionContext) ctx.getChild(2));
+                    stringTree.add("!");
+                    visit((BoolParser.ExpressionContext) ctx.getChild(0));
+                    stringTree.add("*");
+                    stringTree.add("+");
                 }
             }
         } else if (ctx.getChildCount() == 2) { // not expr
