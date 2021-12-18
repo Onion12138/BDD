@@ -7,9 +7,9 @@ import java.util.*;
 
 public class Algorithm {
     private static int maxIndex;
-    private static Map<String, Integer> token2id;
     private static Set<String> tokenSet;
     private static final List<Vertex> traverseVertex = new ArrayList<>();
+    private static int globalId = 0;
     public static Set<String> getTokenSet() {
         return tokenSet;
     }
@@ -35,13 +35,13 @@ public class Algorithm {
     public static List<Vertex> getTraverse() {
         return new ArrayList<>(traverseVertex);
     }
-    private static Vertex invertChildren(Vertex v) {
+    private static Vertex traverseAndInvert(Vertex v) {
         if (v != null) {
             if (v.getLow() != null) {
-                invertChildren(v.getLow());
+                traverseAndInvert(v.getLow());
             }
             if (v.getHigh() != null) {
-                invertChildren(v.getHigh());
+                traverseAndInvert(v.getHigh());
             }
             if (!v.isInverted()) {
                 if (v.getVal() != -1) {
@@ -69,7 +69,7 @@ public class Algorithm {
     }
     public static Vertex getRootVertex(List<String> parsedTokens) {
         Stack<Vertex> stack = new Stack<>();
-        token2id = assignIndex(parsedTokens);
+        Map<String, Integer> token2id = assignIndex(parsedTokens);
         for (String token : parsedTokens) {
             if (Util.isOperator(token)) {
                 if ("+".equals(token) || "*".equals(token)) {
@@ -78,7 +78,7 @@ public class Algorithm {
                     stack.push(apply(a, b, token));
                 } else if ("!".equals(token)){
                     Vertex a = stack.pop();
-                    Vertex ra = invertChildren(a);
+                    Vertex ra = traverseAndInvert(a);
                     stack.push(ra);
                 }
             } else {
@@ -87,21 +87,29 @@ public class Algorithm {
         }
         return stack.pop();
     }
+    private static void traverseAndSetId(Vertex vertex) {
+        if (vertex != null) {
+            vertex.setMask(!vertex.isMask());
+            vertex.setId(globalId);
+            globalId ++;
+            if (vertex.getLow() != null) {
+                if (vertex.isMask() != vertex.getLow().isMask()) {
+                    traverseAndSetId(vertex.getLow());
+                }
+            }
+            if (vertex.getHigh() != null) {
+                if (vertex.isMask() != vertex.getHigh().isMask()) {
+                    traverseAndSetId(vertex.getHigh());
+                }
+            }
+        }
+    }
     private static Vertex apply(Vertex v1, Vertex v2, String operator) {
-        reset();
-        traverse(v1);
-        List<Vertex> firstTraverse = getTraverse();
-        int m = firstTraverse.size();
-        for (int i = 0; i < m; i++) {
-            firstTraverse.get(i).setId(i);
-        }
-        reset();
-        traverse(v2);
-        List<Vertex> secondTraverse = getTraverse();
-        int n = secondTraverse.size();
-        for (int i = 0; i < n; i++) {
-            secondTraverse.get(i).setId(i);
-        }
+        traverseAndSetId(v1);
+        int m = globalId;
+        globalId = 0;
+        traverseAndSetId(v2);
+        int n = globalId;
         Vertex[][] T = new Vertex[m][n];  // sparse matrix, use hash table to optimize
         Vertex u = applyStep(v1, v2, operator, T);
         return reduce(u);
