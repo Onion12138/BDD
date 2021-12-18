@@ -35,6 +35,7 @@ public class App extends Application {
                 "op       := + | * | -> | ^"));
         textArea.setFocusTraversable(false);
         textArea.setPrefSize(400,600);
+        textArea.setFont(textArea.getFont().font(22));
         root.setLeft(textArea);
         ScrollPane sp = new ScrollPane();
         BackgroundFill backgroundFill = new BackgroundFill(Paint.valueOf("#FFFFFF"),null, Insets.EMPTY);

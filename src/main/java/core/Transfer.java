@@ -65,7 +65,7 @@ public class Transfer {
         } catch (Exception e) {
             log.warn("Invalid input: " + e.getMessage());
             log.warn("Please input a valid formula.");
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("INVALID INPUT");
             alert.setHeaderText("Syntax wrong, check your input");
             alert.showAndWait();
