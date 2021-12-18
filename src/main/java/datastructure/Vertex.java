@@ -1,3 +1,5 @@
+package datastructure;
+
 import lombok.Data;
 
 @Data
@@ -8,21 +10,24 @@ public class Vertex {
     private int val;
     private int id;
     private boolean mask;
-    Vertex(int index, int maxIndex) {
+    private boolean inverted;  // for negation
+    public Vertex(int index, int maxIndex) {
         this.low = new Vertex(true, maxIndex);
         this.high = new Vertex(false, maxIndex);
         this.index = index;
         this.val = -1;
         this.mask = false;
+        this.inverted = false;
     }
-    Vertex(boolean low, int maxIndex) {
+    public Vertex(boolean low, int maxIndex) {
         this.low = null;
         this.high = null;
         this.index = maxIndex + 1;
         this.val = low ? 0 : 1;
         this.mask = false;
+        this.inverted = false;
     }
-    Vertex() {}
+    public Vertex() {}
 
     @Override
     public String toString() {

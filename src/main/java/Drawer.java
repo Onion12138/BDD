@@ -1,3 +1,4 @@
+import datastructure.Vertex;
 import guru.nidi.graphviz.attribute.Color;
 import guru.nidi.graphviz.attribute.Label;
 import guru.nidi.graphviz.attribute.Shape;

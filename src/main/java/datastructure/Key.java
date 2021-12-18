@@ -1,23 +1,24 @@
-import lombok.Data;
+package datastructure;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class Key implements Comparable<Key>{
-    private int first;
-    private int second;
-    Key() {}
-    Key(int first, int second) {
-        this.first = first;
-        this.second = second;
+    private int lowid;
+    private int highid;
+    public Key() {}
+    public Key(int lowid, int highid) {
+        this.lowid = lowid;
+        this.highid = highid;
     }
     @Override
     public int compareTo(Key key) {
-        if (this.first < key.first) {
+        if (this.lowid < key.lowid) {
             return -1;
-        } else if (this.first == key.first) {
-            if (this.second <= key.second) {
+        } else if (this.lowid == key.lowid) {
+            if (this.highid <= key.highid) {
                 return -1;
             } else {
                 return 1;
@@ -28,8 +29,9 @@ public class Key implements Comparable<Key>{
     @Override
     public String toString() {
         return "Pair{" +
-                "first=" + first +
-                ", second=" + second +
+                "first=" + lowid +
+                ", second=" + highid +
                 '}';
     }
 }
+

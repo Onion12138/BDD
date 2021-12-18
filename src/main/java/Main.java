@@ -1,3 +1,5 @@
+import datastructure.Vertex;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,22 +10,20 @@ public class Main {
         List<String> tokens = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         String input;
-        input = scanner.nextLine();
-//        while (!(s = scanner.next()).equals("#")) {
-//            tokens.add(s);
-//        }
-//        ParserProtocol parser = new SimpleParser();
-//        List<String> parsedTokens = parser.parse(tokens);
-        Parser parser = new Parser();
-        List<String> parsedTokens = parser.parse(input);
+//        input = scanner.nextLine();
+        while (!(input = scanner.next()).equals("#")) {
+            tokens.add(input);
+        }
+        ParserProtocol parser = new SimpleParser();
+        List<String> parsedTokens = parser.parse(tokens);
+//        Parser parser = new Parser();
+//        List<String> parsedTokens = parser.parse(input);
+        System.out.println(parsedTokens);
         Algorithm.calculateMaxIndex(parsedTokens);
-        Vertex vertex = Algorithm.generateGraph(parsedTokens);
-        System.out.println(vertex);
-        Traverse traverse = new Traverse();
-        traverse.dfs(vertex);
-        List<Vertex> traverseList = traverse.getTraverse();
-        System.out.println(traverseList);
-        // todo draw the graph
+        Vertex vertex = Algorithm.getRootVertex(parsedTokens);
+        Algorithm.reset();
+        Algorithm.traverse(vertex);
+        List<Vertex> traverseList = Algorithm.getTraverse();
         Drawer drawer = new Drawer();
         drawer.draw(traverseList);
     }
