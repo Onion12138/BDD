@@ -28,6 +28,10 @@ public class Main {
             StringBuilder formula = new StringBuilder();
             while (true) {
                 input = scanner.nextLine();
+                if (input.length() == 0) {
+                    System.out.print("... ");
+                    continue;
+                }
                 if (!";".equals(input.substring(input.length() - 1))) {
                     formula.append(input);
                 } else {
