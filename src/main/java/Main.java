@@ -1,5 +1,8 @@
+import core.Algorithm;
+import core.Drawer;
+import core.ParserProtocol;
+import core.SimpleParser;
 import datastructure.Vertex;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,16 +13,11 @@ public class Main {
         List<String> tokens = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         String input;
-//        input = scanner.nextLine();
-        while (!(input = scanner.next()).equals("#")) {
+        while (!"#".equals(input = scanner.next())) {
             tokens.add(input);
         }
         ParserProtocol parser = new SimpleParser();
         List<String> parsedTokens = parser.parse(tokens);
-//        Parser parser = new Parser();
-//        List<String> parsedTokens = parser.parse(input);
-        System.out.println(parsedTokens);
-        Algorithm.calculateMaxIndex(parsedTokens);
         Vertex vertex = Algorithm.getRootVertex(parsedTokens);
         Algorithm.reset();
         Algorithm.traverse(vertex);

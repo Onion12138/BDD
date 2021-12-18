@@ -1,4 +1,5 @@
-import com.kitfox.svg.A;
+package core;
+
 import datastructure.Key;
 import datastructure.Vertex;
 
@@ -7,7 +8,11 @@ import java.util.*;
 public class Algorithm {
     private static int maxIndex;
     private static Map<String, Integer> token2id;
+    private static Set<String> tokenSet;
     private static final List<Vertex> traverseVertex = new ArrayList<>();
+    public static Set<String> getTokenSet() {
+        return tokenSet;
+    }
     public static void traverse(Vertex vertex) {
         if (vertex != null) {
             vertex.setMask(!vertex.isMask());
@@ -47,19 +52,24 @@ public class Algorithm {
         }
         return v;
     }
-    public static void calculateMaxIndex(List<String> parsedTokens) {
-        token2id = new HashMap<>();
+    public static Map<String, Integer> assignIndex(List<String> parsedTokens) {
+        tokenSet = new TreeSet<>();
+        Map<String, Integer> token2id = new HashMap<>();
         for (String token : parsedTokens) {
             if (!Util.isOperator(token)) {
-                if (!token2id.containsKey(token)) {
-                    token2id.put(token, token2id.size() + 1);
-                }
+                tokenSet.add(token);
             }
         }
-        maxIndex = token2id.size();
+        int index = 1;
+        for (String token : tokenSet) {
+            token2id.put(token, index++);
+        }
+        maxIndex = tokenSet.size();
+        return token2id;
     }
     public static Vertex getRootVertex(List<String> parsedTokens) {
         Stack<Vertex> stack = new Stack<>();
+        token2id = assignIndex(parsedTokens);
         for (String token : parsedTokens) {
             if (Util.isOperator(token)) {
                 if ("+".equals(token) || "*".equals(token)) {
@@ -70,16 +80,9 @@ public class Algorithm {
                     Vertex a = stack.pop();
                     Vertex ra = invertChildren(a);
                     stack.push(ra);
-                    // to fix the bug
-//                    Vertex a = stack.pop();
-//                    Vertex low = a.getLow();
-//                    a.setLow(a.getHigh());
-//                    a.setHigh(low);
-//                    stack.push(a);
                 }
             } else {
-//                stack.push(new Vertex(token2id.get(token), maxIndex));
-                stack.push(new Vertex(token.charAt(0) - 'A' + 1, maxIndex));
+                stack.push(new Vertex(token2id.get(token), maxIndex, token));
             }
         }
         return stack.pop();
@@ -99,10 +102,8 @@ public class Algorithm {
         for (int i = 0; i < n; i++) {
             secondTraverse.get(i).setId(i);
         }
-        Vertex first = firstTraverse.get(0); // find roots of two argument graphs
-        Vertex second = secondTraverse.get(0);
         Vertex[][] T = new Vertex[m][n];  // sparse matrix, use hash table to optimize
-        Vertex u = applyStep(first, second, operator, T);
+        Vertex u = applyStep(v1, v2, operator, T);
         return reduce(u);
     }
     private static Vertex applyStep(Vertex v1, Vertex v2, String operator, Vertex[][] T) {
@@ -119,6 +120,11 @@ public class Algorithm {
             u.setHigh(null);
         } else {  // create nonterminal vertex and evaluate further down
             u.setIndex(Math.min(v1.getIndex(), v2.getIndex()));
+            if (v1.getIndex() == u.getIndex()) {
+                u.setToken(v1.getToken());
+            } else {
+                u.setToken(v2.getToken());
+            }
             Vertex vlow1, vhigh1, vlow2, vhigh2;
             if (v1.getIndex() == u.getIndex()) {
                 vlow1 = v1.getLow();

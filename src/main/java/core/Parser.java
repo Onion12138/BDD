@@ -1,3 +1,5 @@
+package core;
+
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -41,7 +43,7 @@ public class Parser {
 
 //    public static void main(String[] args) {
 //
-//        Parser parser = new Parser();
+//        core.Parser parser = new core.Parser();
 //        List<String> parse = parser.parse("(a + b)*c");
 //        System.out.println(111);
 //    }

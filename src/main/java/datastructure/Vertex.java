@@ -11,13 +11,15 @@ public class Vertex {
     private int id;
     private boolean mask;
     private boolean inverted;  // for negation
-    public Vertex(int index, int maxIndex) {
+    private String token;
+    public Vertex(int index, int maxIndex, String token) {
         this.low = new Vertex(true, maxIndex);
         this.high = new Vertex(false, maxIndex);
         this.index = index;
         this.val = -1;
         this.mask = false;
         this.inverted = false;
+        this.token = token;
     }
     public Vertex(boolean low, int maxIndex) {
         this.low = null;
@@ -26,8 +28,11 @@ public class Vertex {
         this.val = low ? 0 : 1;
         this.mask = false;
         this.inverted = false;
+        this.token = "";
     }
-    public Vertex() {}
+    public Vertex() {
+        this.token = "";
+    }
 
     @Override
     public String toString() {
