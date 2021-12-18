@@ -2,6 +2,7 @@ package core;
 
 import core.*;
 import datastructure.Vertex;
+import javafx.scene.control.Alert;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -64,6 +65,10 @@ public class Transfer {
         } catch (Exception e) {
             log.warn("Invalid input: " + e.getMessage());
             log.warn("Please input a valid formula.");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("INVALID INPUT");
+            alert.setHeaderText("Syntax wrong, check your input");
+            alert.showAndWait();
 //            System.out.println("Invalid input: " + e.getMessage());
 //            System.out.println("Please input a valid formula.");
             return null;
@@ -92,3 +97,13 @@ public class Transfer {
 
 
 }
+
+
+//========Welcome to the BDD Diagram Generator System========
+//Please input the formula in the following format:
+//formula  := (formula)
+//          | ! formula
+//          | formula op formula
+//          | variable
+//variable := [a-zA-Z_] [a-zA-Z_0-9]*
+//op       := + | *

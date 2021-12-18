@@ -55,12 +55,13 @@ public class TopMenu extends MenuBar {
     private void transfer(){
         String text = textArea.getText();
         if (text.trim().length()==0&&text==null){
-            log.info("Empty input, ignore");
+            log.info("Empty input, ignored");
             return;
         }
         File file = Transfer.run(text);
         if (file==null){
             log.warn("Missing tem image file");
+            imageView.setImage(null);
             return;
         }
         try {

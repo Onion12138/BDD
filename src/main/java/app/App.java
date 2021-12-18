@@ -8,6 +8,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -22,7 +23,17 @@ public class App extends Application {
         stage.setTitle("BDD Converter @G2");
         BorderPane root = new BorderPane();
         TextArea textArea = new TextArea();
-        textArea.setText("Please input imp program here \nor open a text file that contains a simp program.");
+        textArea.setWrapText(true);
+        textArea.setPromptText("Please input here");
+        textArea.setTooltip(new Tooltip("========Welcome to the BDD Diagram Generator System========\n" +
+                "Please input the formula in the following format:\n" +
+                "formula  := (formula)\n" +
+                "          | ! formula\n" +
+                "          | formula op formula\n" +
+                "          | variable\n" +
+                "variable := [a-zA-Z_] [a-zA-Z_0-9]*\n" +
+                "op       := + | * | -> | ^"));
+        textArea.setFocusTraversable(false);
         textArea.setPrefSize(400,600);
         root.setLeft(textArea);
         ScrollPane sp = new ScrollPane();
