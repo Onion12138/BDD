@@ -82,7 +82,7 @@ public class Algorithm {
                     stack.push(ra);
                 }
             } else {
-                stack.push(new Vertex(token2id.get(token), maxIndex, token));
+                stack.push(new Vertex(token2id.get(token), maxIndex));
             }
         }
         return stack.pop();
@@ -128,11 +128,6 @@ public class Algorithm {
             u.setHigh(null);
         } else {  // create nonterminal vertex and evaluate further down
             u.setIndex(Math.min(v1.getIndex(), v2.getIndex()));
-            if (v1.getIndex() == u.getIndex()) {
-                u.setToken(v1.getToken());
-            } else {
-                u.setToken(v2.getToken());
-            }
             Vertex vlow1, vhigh1, vlow2, vhigh2;
             if (v1.getIndex() == u.getIndex()) {
                 vlow1 = v1.getLow();
@@ -156,14 +151,7 @@ public class Algorithm {
     private static Map<Integer, List<Vertex>> getVlist(List<Vertex> vertexList) {
         Map<Integer, List<Vertex>> ret = new HashMap<>();
         for (Vertex vertex : vertexList) {
-            int index = vertex.getIndex();
-            if (!ret.containsKey(index)) {
-                List<Vertex> vt = new ArrayList<>();
-                ret.put(index, vt);
-            }
-            List<Vertex> vertices = ret.get(index);
-            vertices.add(vertex);
-            ret.put(index, vertices);
+            ret.computeIfAbsent(vertex.getIndex(), $ -> new ArrayList<>()).add(vertex);
         }
         return ret;
     }

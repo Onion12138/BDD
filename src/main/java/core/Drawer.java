@@ -21,11 +21,11 @@ public class Drawer {
     }
     public File draw(List<Vertex> traverse) throws IOException {
         List<String> tokenList = new ArrayList<>(Algorithm.getTokenSet());
-        MutableGraph g = mutGraph("graph").setDirected(true).use((gr, ctx) -> {
+        MutableGraph g = mutGraph("graph").setDirected(false).use((gr, ctx) -> {
             for (Vertex vertex : traverse) {
                 if (isNondeterminal(vertex)) {
                     MutableNode startNode = mutNode(String.valueOf(vertex.getId()));
-                    int index = vertex.getIndex();;
+                    int index = vertex.getIndex();
                     startNode.add(Label.of(tokenList.get(index - 1)));
                     startNode.add(Shape.CIRCLE);
                     if (isNondeterminal(vertex.getLow())) {
