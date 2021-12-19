@@ -38,7 +38,6 @@ public class App extends Application {
         textArea.setFont(textArea.getFont().font(22));
         root.setLeft(textArea);
         ScrollPane sp = new ScrollPane();
-        sp.setScaleShape(true);
         BackgroundFill backgroundFill = new BackgroundFill(Paint.valueOf("#FFFFFF"),null, Insets.EMPTY);
         sp.setBackground(new Background(backgroundFill));
         sp.setPrefSize(500,600);
