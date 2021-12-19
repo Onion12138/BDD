@@ -29,14 +29,19 @@ public class TopMenu extends MenuBar {
     private Stage stage;
     private TextArea textArea;
     private ImageView imageView;
+    private int currentQuality;
+    private Menu qualityMenu;
 
     public TopMenu(Stage stage, TextArea textArea, ImageView iv){
         super();
+        currentQuality = 0;
         fileMenu = new Menu("File");
         startMenu = new Menu("Start");
         imageView = iv;
+        qualityMenu = new Menu("Quality");
         this.getMenus().add(fileMenu);
         this.getMenus().add(startMenu);
+        this.getMenus().add(qualityMenu);
         fileChooser = new FileChooser();
         this.stage = stage;
         this.textArea = textArea;
@@ -46,6 +51,19 @@ public class TopMenu extends MenuBar {
         startTransfer.setOnAction((ActionEvent e)->{transfer();});
         MenuItem saveGraph = new MenuItem("SaveGraph");
         saveGraph.setOnAction((ActionEvent e)->{saveImage();});
+        MenuItem q200 = new MenuItem("200");
+        q200.setOnAction(e->{currentQuality=200;});
+        MenuItem q300 = new MenuItem("300");
+        q300.setOnAction(e->currentQuality=300);
+        MenuItem q500 = new MenuItem("500");
+        q500.setOnAction(e->currentQuality=500);
+        MenuItem q1000 = new MenuItem("1000");
+        q1000.setOnAction(e->currentQuality=1000);
+        MenuItem q2000 = new MenuItem("2000");
+        q2000.setOnAction(e->currentQuality=2000);
+        MenuItem def = new MenuItem("Default");
+        def.setOnAction(e->currentQuality=0);
+        qualityMenu.getItems().addAll(def,q200,q300,q500,q1000,q2000);
         fileMenu.getItems().add(openFile);
         fileMenu.getItems().add(saveGraph);
         startMenu.getItems().add(startTransfer);
@@ -58,7 +76,7 @@ public class TopMenu extends MenuBar {
             log.info("Empty input, ignored");
             return;
         }
-        File file = Transfer.run(text);
+        File file = Transfer.run(text,currentQuality);
         if (file==null){
             log.warn("Missing tem image file");
             imageView.setImage(null);

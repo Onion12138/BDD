@@ -17,7 +17,7 @@ public class Transfer {
 //        run();
 //    }
 
-    public static File run(String input) {
+    public static File run(String input,int quality) {
 //        String input;
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("========Welcome to the BDD Diagram Generator System========");
@@ -54,10 +54,10 @@ public class Transfer {
 //                BDD(formulaStr);
 //            }
 //        }
-        return BDD(input);
+        return BDD(input,quality);
     }
 
-    private static File BDD(String formula) {
+    private static File BDD(String formula,int quality) {
         Parser parser = new Parser();
         List<String> tokens;
         try {
@@ -80,7 +80,7 @@ public class Transfer {
         Drawer drawer = new Drawer();
 //        System.out.println("Drawing the diagram...");
         try {
-            return drawer.draw(traverseList);
+            return drawer.draw(traverseList,quality);
         } catch (IOException e) {
             log.error("Error: " + e.getMessage());
             log.error("Try again.");
