@@ -35,23 +35,54 @@ public class Algorithm {
     public static List<Vertex> getTraverse() {
         return new ArrayList<>(traverseVertex);
     }
+//    private static Vertex traverseAndInvert(Vertex v) {
+//        if (v != null) {
+//            if (v.getLow() != null) {
+//                traverseAndInvert(v.getLow());
+//            }
+//            if (v.getHigh() != null) {
+//                traverseAndInvert(v.getHigh());
+//            }
+//            if (!v.isInverted()) {
+//                if (v.getVal() != -1) {
+//                    v.setVal(1 - v.getVal());
+//                }
+//                v.setInverted(true);
+//            }
+//        }
+//        return v;
+//    }
     private static Vertex traverseAndInvert(Vertex v) {
         if (v != null) {
-            if (v.getLow() != null) {
+            v.setMask(!v.isMask());
+            if (v.getLow() != null && v.isMask() != v.getLow().isMask()) {
                 traverseAndInvert(v.getLow());
             }
-            if (v.getHigh() != null) {
+            if (v.getHigh() != null && v.isMask() != v.getHigh().isMask()) {
                 traverseAndInvert(v.getHigh());
             }
-            if (!v.isInverted()) {
-                if (v.getVal() != -1) {
-                    v.setVal(1 - v.getVal());
-                }
-                v.setInverted(true);
+            if (v.getVal() != -1) {
+                v.setVal(1 - v.getVal());
             }
+//            if (!v.isInverted()) {
+//
+//                v.setInverted(true);
+//            }
         }
         return v;
     }
+//    private static Vertex traverseAndRevert(Vertex v) {
+//        if (v != null) {
+//            if (v.getLow() != null) {
+//                traverseAndInvert(v.getLow());
+//            }
+//            if (v.getHigh() != null) {
+//                traverseAndInvert(v.getHigh());
+//            }
+//            v.setInverted(false);
+//        }
+//        return v;
+//    }
     public static Map<String, Integer> assignIndex(List<String> parsedTokens) {
         tokenSet = new TreeSet<>();
         Map<String, Integer> token2id = new HashMap<>();
@@ -79,6 +110,7 @@ public class Algorithm {
                 } else if ("!".equals(token)){
                     Vertex a = stack.pop();
                     Vertex ra = traverseAndInvert(a);
+//                    traverseAndRevert(ra);
                     stack.push(ra);
                 }
             } else {
