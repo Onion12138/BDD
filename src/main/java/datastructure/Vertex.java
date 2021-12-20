@@ -10,14 +10,12 @@ public class Vertex {
     private int val;
     private int id;
     private boolean mask;
-    private boolean inverted;  // for negation
     public Vertex(int index, int maxIndex) {
         this.low = new Vertex(true, maxIndex);
         this.high = new Vertex(false, maxIndex);
         this.index = index;
         this.val = -1;
         this.mask = false;
-        this.inverted = false;
     }
     public Vertex(boolean low, int maxIndex) {
         this.low = null;
@@ -25,7 +23,6 @@ public class Vertex {
         this.index = maxIndex + 1;
         this.val = low ? 0 : 1;
         this.mask = false;
-        this.inverted = false;
     }
     public Vertex() {
     }

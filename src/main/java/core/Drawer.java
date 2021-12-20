@@ -34,7 +34,6 @@ public class Drawer {
                         endNode.add(Label.of(tokenList.get(index - 1)));
                         startNode.addLink(to((endNode)).with(Style.DASHED).add(Label.of("0")));
                     } else {
-//                        MutableNode endNode = mutNode(getBool(vertex.getLow()) ? "1" : "0");
                         MutableNode endNode = mutNode(getBool(vertex.getLow()) ? "-1" : "-2").add(Label.of(vertex.getLow().getVal()+""));
                         endNode.add(Shape.RECTANGLE);
                         startNode.addLink(to((endNode)).with(Style.DASHED).add(Label.of("0")));
@@ -46,9 +45,13 @@ public class Drawer {
                         startNode.addLink(to((endNode)).add(Label.of("1")));
                     } else {
                         MutableNode endNode = mutNode(getBool(vertex.getHigh()) ? "-1" : "-2").add(Label.of(vertex.getHigh().getVal()+""));
-//                        MutableNode endNode = mutNode(getBool(vertex.getLow()) ? "1" : "0");
                         endNode.add(Shape.RECTANGLE);
                         startNode.addLink(to((endNode)).add(Label.of("1")));
+                    }
+                } else {
+                    if (vertex == traverse.get(0)) {
+                        MutableNode startNode = mutNode(String.valueOf(vertex.getId())).add(Label.of(vertex.getVal() + ""));
+                        startNode.add(Shape.RECTANGLE);
                     }
                 }
             }
