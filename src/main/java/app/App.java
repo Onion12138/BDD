@@ -15,6 +15,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class App extends Application {
 
@@ -33,6 +34,8 @@ public class App extends Application {
                 "          | variable\n" +
                 "variable := [a-zA-Z_] [a-zA-Z_0-9]*\n" +
                 "op       := + | * | -> | ^"));
+
+        textArea.getTooltip().setShowDuration(new Duration(300000));
         textArea.setFocusTraversable(false);
         textArea.setPrefSize(400,600);
         textArea.setFont(textArea.getFont().font(22));

@@ -19,7 +19,7 @@ public class Drawer {
     public static boolean getBool(Vertex vertex) {
         return vertex.getVal() == 1;
     }
-    public File draw(List<Vertex> traverse) throws IOException {
+    public File draw(List<Vertex> traverse,int quality) throws IOException {
         List<String> tokenList = new ArrayList<>(Algorithm.getTokenSet());
         MutableGraph g = mutGraph("graph").setDirected(false).use((gr, ctx) -> {
             for (Vertex vertex : traverse) {
@@ -53,7 +53,9 @@ public class Drawer {
                 }
             }
         });
-        return Graphviz.fromGraph(g).render(Format.PNG).toFile(new File("tem.png"));
+        if(quality==0)
+            return Graphviz.fromGraph(g).render(Format.PNG).toFile(new File("tem.png"));
+        else return Graphviz.fromGraph(g).width(quality).render(Format.PNG).toFile(new File("tem.png"));
     }
     private boolean isNondeterminal(Vertex vertex) {
         return vertex.getLow() != null && vertex.getHigh() != null;
